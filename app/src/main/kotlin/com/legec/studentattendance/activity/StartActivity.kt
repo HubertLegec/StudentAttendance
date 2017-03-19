@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.legec.studentattendance.R
-import com.legec.studentattendance.activity.MainActivity
 
 
 class StartActivity : AppCompatActivity() {
