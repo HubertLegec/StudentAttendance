@@ -6,19 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.legec.studentattendance.R
-import com.legec.studentattendance.callback.DeleteSemesterCallback
 import com.legec.studentattendance.model.Semester
 import com.legec.studentattendance.view.SemesterView
 
 
-class SemesterListAdapter(context: Activity, val deleteSemCallback: DeleteSemesterCallback) : BaseAdapter() {
+class SemesterListAdapter(context: Activity, val deleteSemCallback: (Int) -> Unit) : BaseAdapter() {
     private val inflater = LayoutInflater.from(context)
     private val semesters: MutableList<Semester> = ArrayList()
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val semester: Semester = getItem(position) as Semester
         var v = view
-        var holder: SemesterView
+        val holder: SemesterView
         if (v != null) {
             holder = v.tag as SemesterView
         } else {
@@ -37,7 +36,7 @@ class SemesterListAdapter(context: Activity, val deleteSemCallback: DeleteSemest
     }
 
     override fun getItemId(position: Int): Long {
-        return 0
+        return semesters[position].id.toLong()
     }
 
     override fun getCount(): Int {
@@ -46,13 +45,18 @@ class SemesterListAdapter(context: Activity, val deleteSemCallback: DeleteSemest
 
     fun addElement(semester: Semester) {
         semesters.add(semester)
+        notifyDataSetChanged()
     }
 
     fun addAll(toAdd: List<Semester>) {
         semesters.addAll(toAdd)
     }
 
-    fun delete(id: Int) {
-        semesters.removeIf { el -> el.id == id }
+    fun deleteElem(id: Int) {
+        val elem = semesters.find { e -> e.id == id }
+        if (elem != null) {
+            semesters.remove(elem)
+            notifyDataSetChanged()
+        }
     }
 }

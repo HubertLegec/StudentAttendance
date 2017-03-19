@@ -25,7 +25,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.SemesterActivity"
-            android:label="@string/title_activity_semester"></activity>
+            android:label="@string/title_activity_semester"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
