@@ -1,8 +1,8 @@
 package com.legec.studentattendance.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.AdapterView
 import android.widget.ListView
 import butterknife.BindView
@@ -14,7 +14,7 @@ import com.legec.studentattendance.dialog.NewSemesterDialog
 import com.legec.studentattendance.model.Semester
 import com.legec.studentattendance.repository.SemesterRepository
 
-class MainActivity : Activity() {
+class MainActivity : AppCompatActivity() {
     val SEMESTER_MESSAGE = "com.legec.StudentAttendance.SEMESTER_MESSAGE"
     @BindView(R.id.list)
     lateinit var semesterList: ListView
