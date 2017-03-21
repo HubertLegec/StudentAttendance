@@ -10,7 +10,7 @@ import com.legec.studentattendance.model.Semester
 import com.legec.studentattendance.view.SemesterView
 
 
-class SemesterListAdapter(context: Activity, val deleteSemCallback: (Int) -> Unit) : BaseAdapter() {
+class SemesterListAdapter(context: Activity, val deleteSemCallback: (String) -> Unit) : BaseAdapter() {
     private val inflater = LayoutInflater.from(context)
     private val semesters: MutableList<Semester> = ArrayList()
 
@@ -28,6 +28,7 @@ class SemesterListAdapter(context: Activity, val deleteSemCallback: (Int) -> Uni
 
         holder.semesterName.text = semester.semesterName
         holder.subjectName.text = semester.subjectName
+        holder.id = semester.id
         return v
     }
 
@@ -36,7 +37,7 @@ class SemesterListAdapter(context: Activity, val deleteSemCallback: (Int) -> Uni
     }
 
     override fun getItemId(position: Int): Long {
-        return semesters[position].id.toLong()
+        return 0
     }
 
     override fun getCount(): Int {
@@ -52,7 +53,7 @@ class SemesterListAdapter(context: Activity, val deleteSemCallback: (Int) -> Uni
         semesters.addAll(toAdd)
     }
 
-    fun deleteElem(id: Int) {
+    fun deleteElem(id: String) {
         val elem = semesters.find { e -> e.id == id }
         if (elem != null) {
             semesters.remove(elem)

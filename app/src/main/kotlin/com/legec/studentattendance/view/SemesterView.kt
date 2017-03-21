@@ -8,7 +8,7 @@ import butterknife.OnClick
 import com.legec.studentattendance.R
 
 
-class SemesterView(view: View, val deleteCallback: (Int) -> Unit, val id: Int) {
+class SemesterView(view: View, val deleteCallback: (String) -> Unit, var id: String) {
     @BindView(R.id.subject_name)
     lateinit var subjectName: TextView
     @BindView(R.id.semester_name)
