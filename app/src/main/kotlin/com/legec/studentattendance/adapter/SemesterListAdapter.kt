@@ -8,9 +8,10 @@ import android.widget.BaseAdapter
 import com.legec.studentattendance.R
 import com.legec.studentattendance.model.Semester
 import com.legec.studentattendance.view.SemesterView
+import io.realm.Realm
 
 
-class SemesterListAdapter(context: Activity, val deleteSemCallback: (String) -> Unit) : BaseAdapter() {
+class SemesterListAdapter(context: Activity, val deleteSemCallback: (String) -> Unit, val editSemCallback: (String, String, String) -> Unit) : BaseAdapter() {
     private val inflater = LayoutInflater.from(context)
     private val semesters: MutableList<Semester> = ArrayList()
 
@@ -22,7 +23,7 @@ class SemesterListAdapter(context: Activity, val deleteSemCallback: (String) -> 
             holder = v.tag as SemesterView
         } else {
             v = inflater.inflate(R.layout.semester_view, parent, false)
-            holder = SemesterView(v, deleteSemCallback, semester.id)
+            holder = SemesterView(v, deleteSemCallback, editSemCallback, semester.id)
             v!!.tag = holder
         }
 
@@ -51,6 +52,17 @@ class SemesterListAdapter(context: Activity, val deleteSemCallback: (String) -> 
 
     fun addAll(toAdd: List<Semester>) {
         semesters.addAll(toAdd)
+    }
+
+    fun editElement(id: String, subjectName: String, semesterName: String) {
+        val sem = semesters.find { e -> e.id == id}
+        if (sem != null) {
+            Realm.getDefaultInstance().beginTransaction()
+            sem.subjectName = subjectName
+            sem.semesterName = semesterName
+            Realm.getDefaultInstance().commitTransaction()
+            notifyDataSetChanged()
+        }
     }
 
     fun deleteElem(id: String) {

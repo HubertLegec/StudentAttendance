@@ -30,6 +30,14 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/edit_button"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:src="@drawable/edit"
+        android:padding="6dp"/>
+
+    <ImageView
         android:id="@+id/delete_button"
         android:layout_width="0dp"
         android:layout_weight="1"

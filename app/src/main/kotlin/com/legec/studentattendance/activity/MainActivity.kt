@@ -27,10 +27,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
-        semesterListAdapter = SemesterListAdapter(this, { id ->
-            semesterListAdapter.deleteElem(id)
-            semesterRepository.deleteSemester(id)
-        })
+        semesterListAdapter = SemesterListAdapter(this,
+                { id ->
+                    semesterListAdapter.deleteElem(id)
+                    semesterRepository.deleteSemester(id)
+                },
+                { id, oldSubject, oldSemester ->
+                    onEditSemester(id, oldSubject, oldSemester)
+                })
         semesterListAdapter.addAll(semesterRepository.getSavedSemesters())
         semesterList.adapter = semesterListAdapter
         semesterList.choiceMode = ListView.CHOICE_MODE_SINGLE
@@ -49,5 +53,14 @@ class MainActivity : AppCompatActivity() {
             semesterListAdapter.addElement(sem)
         })
         dialog.show(fragmentManager, "NewSemesterDialogFragment")
+    }
+
+    fun onEditSemester(id: String, oldSubject: String, oldSemester: String) {
+        val dialog = NewSemesterDialog({ subject, semester ->
+            if(oldSemester != semester || oldSubject != subject) {
+                semesterListAdapter.editElement(id, subject, semester)
+            }
+        }, oldSubject, oldSemester)
+        dialog.show(fragmentManager, "EditSemesterDialogFragment")
     }
 }
