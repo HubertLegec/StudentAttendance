@@ -9,10 +9,12 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.legec.studentattendance.R
+import com.legec.studentattendance.StudentAttendanceApp
 import com.legec.studentattendance.adapter.SemesterListAdapter
 import com.legec.studentattendance.dialog.NewSemesterDialog
 import com.legec.studentattendance.model.Semester
 import com.legec.studentattendance.repository.SemesterRepository
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     val SEMESTER_MESSAGE = "com.legec.StudentAttendance.SEMESTER_MESSAGE"
@@ -21,12 +23,13 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var semesterListAdapter: SemesterListAdapter
 
-    val semesterRepository = SemesterRepository()
+    @Inject lateinit var semesterRepository: SemesterRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
+        StudentAttendanceApp.semesterComponent.inject(this)
         semesterListAdapter = SemesterListAdapter(this,
                 { id ->
                     semesterListAdapter.deleteElem(id)

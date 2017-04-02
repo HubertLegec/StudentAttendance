@@ -4,8 +4,10 @@ import android.util.Log
 import com.legec.studentattendance.model.Semester
 import io.realm.Realm
 import java.util.*
+import javax.inject.Singleton
 
 
+@Singleton
 class SemesterRepository {
     private val TAG = "SemesterRepository"
     val realm: Realm = Realm.getDefaultInstance()
@@ -21,7 +23,10 @@ class SemesterRepository {
     }
 
     fun getSavedSemesters() : List<Semester> {
-        return realm.where(Semester::class.java).findAll()
+        return realm
+                .where(Semester::class.java)
+                .findAll()
+                .toList()
     }
 
     fun deleteSemester(id: String) {
