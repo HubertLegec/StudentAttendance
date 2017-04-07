@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">StudentAttendance</string>
+    <string name="face_api_subscription_key">b88c1155c3484817b67dfeb0977a2509</string>
     <string name="title_activity_semester">SemesterActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>

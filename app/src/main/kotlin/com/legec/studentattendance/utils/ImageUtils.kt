@@ -57,7 +57,7 @@ fun loadSizeLimitedBitmap(imageUri: Uri, contentResolver: ContentResolver): Bitm
  * Crop the face thumbnail out from the original image.
  * For better view for human, face rectangles are resized to the rate faceRectEnlargeRatio.
  */
-fun generateFaceThumbNail(image: Bitmap, faceRectangle: FaceRectangle): Bitmap {
+fun generateFaceThumbnail(image: Bitmap, faceRectangle: FaceRectangle): Bitmap {
     val faceRect = calculateFaceRectangle(image, faceRectangle, FACE_RECT_SCALE_RATIO)
     return Bitmap.createBitmap(image, faceRect.left, faceRect.top, faceRect.width, faceRect.height)
 }
