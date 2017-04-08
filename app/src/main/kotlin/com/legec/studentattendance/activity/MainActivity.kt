@@ -14,6 +14,7 @@ import com.legec.studentattendance.adapter.SemesterListAdapter
 import com.legec.studentattendance.dialog.NewSemesterDialog
 import com.legec.studentattendance.model.Semester
 import com.legec.studentattendance.repository.SemesterRepository
+import com.legec.studentattendance.semester.SemesterActivity
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
