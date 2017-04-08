@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.StartActivity"
+            android:name=".StartActivity"
             android:label="@string/app_name"
             android:noHistory="true"
             android:theme="@style/SplashTheme">
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".semesterList.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
         <activity

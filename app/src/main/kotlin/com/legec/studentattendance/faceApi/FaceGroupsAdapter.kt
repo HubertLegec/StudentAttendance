@@ -1,4 +1,4 @@
-package com.legec.studentattendance.adapter
+package com.legec.studentattendance.faceApi
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.legec.studentattendance.R
-import com.legec.studentattendance.faceApi.FacesAdapter
-import com.legec.studentattendance.view.EmbeddedGridView
 import com.microsoft.projectoxford.face.contract.GroupResult
 import java.util.*
 import kotlin.collections.ArrayList

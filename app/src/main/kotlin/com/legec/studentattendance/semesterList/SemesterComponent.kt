@@ -1,7 +1,7 @@
-package com.legec.studentattendance.component
+package com.legec.studentattendance.semesterList
 
-import com.legec.studentattendance.activity.MainActivity
-import com.legec.studentattendance.module.AppModule
+import com.legec.studentattendance.semesterList.MainActivity
+import com.legec.studentattendance.AppModule
 import dagger.Component
 import javax.inject.Singleton
 

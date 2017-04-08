@@ -1,7 +1,6 @@
-package com.legec.studentattendance.repository
+package com.legec.studentattendance.semesterList
 
 import android.util.Log
-import com.legec.studentattendance.model.Semester
 import io.realm.Realm
 import java.util.*
 import javax.inject.Singleton

@@ -1,4 +1,4 @@
-package com.legec.studentattendance.model
+package com.legec.studentattendance.semesterList
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey

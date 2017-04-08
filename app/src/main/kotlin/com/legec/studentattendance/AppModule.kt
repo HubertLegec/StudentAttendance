@@ -1,8 +1,8 @@
-package com.legec.studentattendance.module
+package com.legec.studentattendance
 
 import android.app.Application
 import android.content.Context
-import com.legec.studentattendance.repository.SemesterRepository
+import com.legec.studentattendance.semesterList.SemesterRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

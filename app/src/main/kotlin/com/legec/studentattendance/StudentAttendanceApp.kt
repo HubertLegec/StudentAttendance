@@ -1,9 +1,8 @@
 package com.legec.studentattendance
 
 import android.app.Application
-import com.legec.studentattendance.component.DaggerSemesterComponent
-import com.legec.studentattendance.component.SemesterComponent
-import com.legec.studentattendance.module.AppModule
+import com.legec.studentattendance.semesterList.DaggerSemesterComponent
+import com.legec.studentattendance.semesterList.SemesterComponent
 import io.realm.Realm
 
 

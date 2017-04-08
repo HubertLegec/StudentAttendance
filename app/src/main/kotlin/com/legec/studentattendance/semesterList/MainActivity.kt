@@ -1,8 +1,9 @@
-package com.legec.studentattendance.activity
+package com.legec.studentattendance.semesterList
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.widget.AdapterView
 import android.widget.ListView
 import butterknife.BindView
@@ -10,10 +11,6 @@ import butterknife.ButterKnife
 import butterknife.OnClick
 import com.legec.studentattendance.R
 import com.legec.studentattendance.StudentAttendanceApp
-import com.legec.studentattendance.adapter.SemesterListAdapter
-import com.legec.studentattendance.dialog.NewSemesterDialog
-import com.legec.studentattendance.model.Semester
-import com.legec.studentattendance.repository.SemesterRepository
 import com.legec.studentattendance.semester.SemesterActivity
 import javax.inject.Inject
 
@@ -31,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
         StudentAttendanceApp.semesterComponent.inject(this)
-        semesterListAdapter = SemesterListAdapter(this,
+        semesterListAdapter = SemesterListAdapter(LayoutInflater.from(this),
                 { id ->
                     semesterListAdapter.deleteElem(id)
                     semesterRepository.deleteSemester(id)

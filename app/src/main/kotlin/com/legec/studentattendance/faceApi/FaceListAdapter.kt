@@ -1,4 +1,4 @@
-package com.legec.studentattendance.adapter
+package com.legec.studentattendance.faceApi
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import com.legec.studentattendance.R
-import com.legec.studentattendance.utils.generateFaceThumbnail
+import com.legec.studentattendance.semester.generateFaceThumbnail
 import com.microsoft.projectoxford.face.contract.Face
 import java.util.*
 import kotlin.collections.ArrayList

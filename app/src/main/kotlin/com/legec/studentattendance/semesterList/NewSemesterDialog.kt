@@ -1,4 +1,4 @@
-package com.legec.studentattendance.dialog
+package com.legec.studentattendance.semesterList
 
 import android.app.AlertDialog
 import android.app.Dialog

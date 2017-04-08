@@ -1,10 +1,10 @@
-package com.legec.studentattendance.activity
+package com.legec.studentattendance
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import com.legec.studentattendance.R
+import com.legec.studentattendance.semesterList.MainActivity
 
 
 class StartActivity : AppCompatActivity() {

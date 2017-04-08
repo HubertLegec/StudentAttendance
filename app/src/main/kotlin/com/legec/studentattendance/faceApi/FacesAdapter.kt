@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import com.legec.studentattendance.R
-import com.legec.studentattendance.adapter.FaceListAdapter
 import java.util.*
 
 

@@ -1,18 +1,18 @@
-package com.legec.studentattendance.adapter
+package com.legec.studentattendance.semesterList
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.legec.studentattendance.R
-import com.legec.studentattendance.model.Semester
-import com.legec.studentattendance.view.SemesterView
 import io.realm.Realm
 
 
-class SemesterListAdapter(context: Activity, val deleteSemCallback: (String) -> Unit, val editSemCallback: (String, String, String) -> Unit) : BaseAdapter() {
-    private val inflater = LayoutInflater.from(context)
+class SemesterListAdapter(
+        val inflater: LayoutInflater,
+        val deleteSemCallback: (String) -> Unit,
+        val editSemCallback: (String, String, String) -> Unit
+) : BaseAdapter() {
     private val semesters: MutableList<Semester> = ArrayList()
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {

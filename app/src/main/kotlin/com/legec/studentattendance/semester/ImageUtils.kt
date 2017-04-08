@@ -1,4 +1,4 @@
-package com.legec.studentattendance.utils
+package com.legec.studentattendance.semester
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
@@ -9,6 +9,9 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.provider.MediaStore
 import com.microsoft.projectoxford.face.contract.FaceRectangle
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 
 // The maximum side length of the image to detect, to keep the size of image less than 4MB.
 // Resize the image if its side length is larger than the maximum.
@@ -62,6 +65,11 @@ fun generateFaceThumbnail(image: Bitmap, faceRectangle: FaceRectangle): Bitmap {
     return Bitmap.createBitmap(image, faceRect.left, faceRect.top, faceRect.width, faceRect.height)
 }
 
+fun compressBitmapToJpeg(bitmap: Bitmap) : InputStream {
+    val output = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output)
+    return ByteArrayInputStream(output.toByteArray())
+}
 
 /**
  * Return the number of times for the image to shrink when loading it into memory.

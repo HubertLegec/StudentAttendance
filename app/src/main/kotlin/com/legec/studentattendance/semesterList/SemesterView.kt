@@ -1,4 +1,4 @@
-package com.legec.studentattendance.view
+package com.legec.studentattendance.semesterList
 
 import android.view.View
 import android.widget.TextView

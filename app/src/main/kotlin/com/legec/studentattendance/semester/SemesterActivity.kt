@@ -5,10 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.PersistableBundle
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
-import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -20,30 +20,27 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.legec.studentattendance.R
+import com.legec.studentattendance.faceApi.FaceApiService
 import java.io.File
 import java.io.IOException
+import javax.inject.Inject
 
 class SemesterActivity : AppCompatActivity() {
     private val TAG = "SemesterActivity"
     private val REQUEST_TAKE_PHOTO = 0
+    private val REQUEST_PHOTO_FROM_GALLERY = 1
+
     @BindView(R.id.toolbar)
     lateinit var toolbar: Toolbar
-    /**
-     * The [android.support.v4.view.PagerAdapter] that will provide
-     * fragments for each of the sections. We use a
-     * [FragmentPagerAdapter] derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * [android.support.v4.app.FragmentStatePagerAdapter].
-     */
-    private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+    @BindView(R.id.container)
+    lateinit var mViewPager: ViewPager
+    @BindView(R.id.tabs)
+    lateinit var tabLayout: TabLayout
 
-    /**
-     * The [ViewPager] that will host the section contents.
-     */
-    private var mViewPager: ViewPager? = null
-
+    lateinit private var mSectionsPagerAdapter: SectionsPagerAdapter
     private var takenPhotoUri: Uri? = null
+
+    @Inject lateinit var faceApiService: FaceApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,13 +50,18 @@ class SemesterActivity : AppCompatActivity() {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container) as ViewPager
-        mViewPager!!.adapter = mSectionsPagerAdapter
-
-        val tabLayout = findViewById(R.id.tabs) as TabLayout
+        mViewPager.adapter = mSectionsPagerAdapter
         tabLayout.setupWithViewPager(mViewPager)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState?.putParcelable("imageUri", takenPhotoUri)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        takenPhotoUri = savedInstanceState?.getParcelable("imageUri")
     }
 
     @OnClick(R.id.camera_button)
@@ -82,7 +84,11 @@ class SemesterActivity : AppCompatActivity() {
 
     @OnClick(R.id.gallery_button)
     fun onGalleryButtonClick() {
-        //TODO
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivityForResult(intent, REQUEST_PHOTO_FROM_GALLERY)
+        }
     }
 
 
@@ -97,23 +103,30 @@ class SemesterActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-
-
-        if (id == R.id.action_settings) {
-            return true
-        }
-
-        return super.onOptionsItemSelected(item)
+        return if (id == R.id.action_settings) true else super.onOptionsItemSelected(item)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
-                val imageUri: Uri
-                if (data == null || data.data == null) {
-                    imageUri = takenPhotoUri!!
-                } else {
-                    imageUri = data.data
+        if ((requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PHOTO_FROM_GALLERY)
+                && resultCode == Activity.RESULT_OK) {
+            val imageUri = data?.data ?: takenPhotoUri!!
+            mSectionsPagerAdapter.addImage(imageUri)
+            /*val bitmap = loadSizeLimitedBitmap(imageUri, contentResolver)
+            val imageInputStream = compressBitmapToJpeg(bitmap)
+            faceApiService.detect(imageInputStream, object: DetectionCallback {
+                override fun onPreExecute() {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
+
+                override fun onProgressUpdate(value: String) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onPostExecute(result: List<Face>) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+            })*/
         }
     }
 }
