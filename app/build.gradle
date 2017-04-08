@@ -48,9 +48,10 @@ dependencies {
     })
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile group: 'com.microsoft.projectoxford', name: 'face', version: '1.2.5'
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support:design:25.3.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.jakewharton:butterknife:8.0.1'
+    compile 'com.github.clans:fab:1.6.4'
     testCompile 'junit:junit:4.12'
     kapt 'com.jakewharton:butterknife-compiler:8.0.1'
     compile 'com.google.dagger:dagger:2.4'
