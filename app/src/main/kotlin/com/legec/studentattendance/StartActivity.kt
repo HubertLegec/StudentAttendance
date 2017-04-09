@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import com.legec.studentattendance.semesterList.MainActivity
+import com.legec.studentattendance.semesterList.SemesterListActivity
 
 
 class StartActivity : AppCompatActivity() {
@@ -13,7 +13,7 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
         Handler().postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, SemesterListActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000)

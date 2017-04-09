@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".semesterList.MainActivity"
+            android:name=".semesterList.SemesterListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
         <activity

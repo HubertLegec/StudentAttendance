@@ -9,11 +9,11 @@ import io.realm.Realm
 
 
 class SemesterListAdapter(
-        val inflater: LayoutInflater,
-        val deleteSemCallback: (String) -> Unit,
-        val editSemCallback: (String, String, String) -> Unit
+        private val inflater: LayoutInflater,
+        private val deleteSemCallback: (String) -> Unit,
+        private val editSemCallback: (String, String, String) -> Unit,
+        private val semesters: MutableList<Semester> = ArrayList()
 ) : BaseAdapter() {
-    private val semesters: MutableList<Semester> = ArrayList()
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
         val semester: Semester = getItem(position) as Semester

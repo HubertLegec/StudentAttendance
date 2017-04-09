@@ -80,21 +80,21 @@
             android:id="@+id/camera_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/camera"
+            android:src="@drawable/camera_white"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorPrimary"
             fab:fab_label="Camera"
-            fab:fab_size="normal" />
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/gallery_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/photo_library"
+            android:src="@drawable/photo_library_white"
             fab:fab_colorNormal="@color/colorAccent"
             fab:fab_colorPressed="@color/colorPrimary"
             fab:fab_label="Gallery"
-            fab:fab_size="normal" />
+            fab:fab_size="mini" />
     </com.github.clans.fab.FloatingActionMenu>
 
 </android.support.design.widget.CoordinatorLayout>

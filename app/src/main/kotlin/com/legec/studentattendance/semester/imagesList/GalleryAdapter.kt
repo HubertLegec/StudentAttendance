@@ -1,7 +1,6 @@
 package com.legec.studentattendance.semester.imagesList
 
 import android.content.Context
-import android.net.Uri
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.legec.studentattendance.R
 
 
-class GalleryAdapter(val context: Context, val images: List<Uri>): RecyclerView.Adapter<MyViewHolder>() {
+class GalleryAdapter(val context: Context, val images: List<Image>): RecyclerView.Adapter<MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MyViewHolder {
         val itemView = LayoutInflater.from(parent?.context)
@@ -24,7 +23,7 @@ class GalleryAdapter(val context: Context, val images: List<Uri>): RecyclerView.
 
     override fun onBindViewHolder(holder: MyViewHolder?, position: Int) {
         val image = images[position]
-        Glide.with(context).load(image)
+        Glide.with(context).load(image.getUri())
                 .thumbnail(0.5f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

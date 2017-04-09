@@ -12,12 +12,12 @@ import com.legec.studentattendance.semester.studentList.StudentListFragment
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class SectionsPagerAdapter(fm: FragmentManager, semesterId: String) : FragmentPagerAdapter(fm) {
     private val fragments: Map<Int, Fragment>
 
     init {
         fragments = HashMap()
-        fragments[0] = ImageListFragment()
+        fragments[0] = ImageListFragment(semesterId)
         fragments[1] = StudentListFragment()
     }
 

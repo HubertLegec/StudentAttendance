@@ -26,6 +26,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class SemesterActivity : AppCompatActivity() {
+    private val SEMESTER_MESSAGE = "com.legec.StudentAttendance.SEMESTER_MESSAGE"
     private val TAG = "SemesterActivity"
     private val REQUEST_TAKE_PHOTO = 0
     private val REQUEST_PHOTO_FROM_GALLERY = 1
@@ -38,6 +39,7 @@ class SemesterActivity : AppCompatActivity() {
     lateinit var tabLayout: TabLayout
 
     lateinit private var mSectionsPagerAdapter: SectionsPagerAdapter
+    lateinit private var semesterId: String
     private var takenPhotoUri: Uri? = null
 
     @Inject lateinit var faceApiService: FaceApiService
@@ -49,7 +51,8 @@ class SemesterActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        semesterId = intent.getStringExtra(SEMESTER_MESSAGE)
+        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager, semesterId)
         mViewPager.adapter = mSectionsPagerAdapter
         tabLayout.setupWithViewPager(mViewPager)
     }
