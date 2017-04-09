@@ -49,7 +49,7 @@ fun loadSizeLimitedBitmap(imageUri: Uri, contentResolver: ContentResolver): Bitm
     imageInputStream = contentResolver.openInputStream(imageUri)
     var bitmap = BitmapFactory.decodeStream(imageInputStream, outPadding, options)
     maxSideLength = if (bitmap.width > bitmap.height) bitmap.width else bitmap.height
-    val ratio = IMAGE_MAX_SIDE_LENGTH / maxSideLength as Double
+    val ratio = IMAGE_MAX_SIDE_LENGTH / maxSideLength.toDouble()
     if (ratio < 1) {
         bitmap = Bitmap.createScaledBitmap(bitmap, (bitmap.width * ratio).toInt(), (bitmap.height * ratio).toInt(), false)
     }

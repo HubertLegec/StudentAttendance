@@ -10,6 +10,7 @@ import javax.inject.Singleton
 
 @Module
 class FaceApiModule(val mApplication: Application) {
+
     @Provides
     @Singleton
     fun providesFaceServiceClient(): FaceServiceClient {

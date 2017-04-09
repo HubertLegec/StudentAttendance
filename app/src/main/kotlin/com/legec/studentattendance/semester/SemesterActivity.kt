@@ -16,11 +16,15 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.legec.studentattendance.R
+import com.legec.studentattendance.StudentAttendanceApp
+import com.legec.studentattendance.faceApi.DetectionCallback
 import com.legec.studentattendance.faceApi.FaceApiService
+import com.microsoft.projectoxford.face.contract.Face
 import java.io.File
 import java.io.IOException
 import javax.inject.Inject
@@ -37,6 +41,8 @@ class SemesterActivity : AppCompatActivity() {
     lateinit var mViewPager: ViewPager
     @BindView(R.id.tabs)
     lateinit var tabLayout: TabLayout
+    @BindView(R.id.progressbar_view)
+    lateinit var loader: LinearLayout
 
     lateinit private var mSectionsPagerAdapter: SectionsPagerAdapter
     lateinit private var semesterId: String
@@ -48,13 +54,13 @@ class SemesterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_semester)
         ButterKnife.bind(this)
+        StudentAttendanceApp.semesterComponent.inject(this)
         setSupportActionBar(toolbar)
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         semesterId = intent.getStringExtra(SEMESTER_MESSAGE)
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager, semesterId)
         mViewPager.adapter = mSectionsPagerAdapter
         tabLayout.setupWithViewPager(mViewPager)
+        loader.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
@@ -96,7 +102,6 @@ class SemesterActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_semester, menu)
         return true
     }
@@ -114,22 +119,22 @@ class SemesterActivity : AppCompatActivity() {
                 && resultCode == Activity.RESULT_OK) {
             val imageUri = data?.data ?: takenPhotoUri!!
             mSectionsPagerAdapter.addImage(imageUri, requestCode == REQUEST_TAKE_PHOTO)
-            /*val bitmap = loadSizeLimitedBitmap(imageUri, contentResolver)
+            val bitmap = loadSizeLimitedBitmap(imageUri, contentResolver)
             val imageInputStream = compressBitmapToJpeg(bitmap)
             faceApiService.detect(imageInputStream, object: DetectionCallback {
                 override fun onPreExecute() {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    loader.visibility = View.VISIBLE
                 }
 
                 override fun onProgressUpdate(value: String) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    Log.i(TAG, value)
                 }
 
                 override fun onPostExecute(result: List<Face>) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    loader.visibility = View.GONE
                 }
 
-            })*/
+            })
         }
     }
 }
