@@ -5,8 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/img_header"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/img_date"
+            android:layout_weight="7"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/img_delete"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/delete"/>
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/thumbnail"
+        android:layout_below="@+id/img_header"
         android:layout_margin="1dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

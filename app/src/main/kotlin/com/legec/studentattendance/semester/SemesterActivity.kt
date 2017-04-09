@@ -113,7 +113,7 @@ class SemesterActivity : AppCompatActivity() {
         if ((requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PHOTO_FROM_GALLERY)
                 && resultCode == Activity.RESULT_OK) {
             val imageUri = data?.data ?: takenPhotoUri!!
-            mSectionsPagerAdapter.addImage(imageUri)
+            mSectionsPagerAdapter.addImage(imageUri, requestCode == REQUEST_TAKE_PHOTO)
             /*val bitmap = loadSizeLimitedBitmap(imageUri, contentResolver)
             val imageInputStream = compressBitmapToJpeg(bitmap)
             faceApiService.detect(imageInputStream, object: DetectionCallback {

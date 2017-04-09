@@ -1,5 +1,6 @@
 package com.legec.studentattendance.semester.imagesList
 
+import android.app.AlertDialog
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -28,6 +29,17 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
     lateinit private var adapter: GalleryAdapter
     lateinit private var unbinder: Unbinder
 
+    val onDeleteImage: (String) -> Unit = { id: String ->
+        val dialog = AlertDialog.Builder(this.context)
+                .setMessage("Delete this message?")
+                .setPositiveButton("Yes", { _, _ ->
+                    adapter.deleteImage(id)
+                    imageRepository.deleteImage(id)
+                })
+                .setNegativeButton("No", { _, _ -> })
+        dialog.show()
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_images_list, container, false)
@@ -35,7 +47,7 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
         StudentAttendanceApp.semesterComponent.inject(this)
         val layoutManager = GridLayoutManager(this.context, 1)
         images.addAll(imageRepository.getImagesForSemester(semesterId))
-        adapter = GalleryAdapter(this.context, images)
+        adapter = GalleryAdapter(this.context, images, onDeleteImage)
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
@@ -47,8 +59,8 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
         unbinder.unbind()
     }
 
-    fun addImage(imageUri: Uri) {
-        val image = imageRepository.saveImage(imageUri, Date(), semesterId)
+    fun addImage(imageUri: Uri, fromCamera: Boolean) {
+        val image = imageRepository.saveImage(imageUri, semesterId, fromCamera)
         images.add(image)
         adapter.notifyDataSetChanged()
     }

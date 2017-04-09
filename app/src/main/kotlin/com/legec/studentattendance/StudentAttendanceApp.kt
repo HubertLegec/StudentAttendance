@@ -22,7 +22,7 @@ class StudentAttendanceApp : Application() {
         Realm.init(this)
         semesterComponent = DaggerSemesterComponent.builder()
                 .faceApiModule(FaceApiModule(this))
-                .semesterModule(SemesterModule())
+                .semesterModule(SemesterModule(this))
                 .build()
         semesterListComponent = DaggerSemesterListComponent.builder()
                 .appModule(AppModule(this))

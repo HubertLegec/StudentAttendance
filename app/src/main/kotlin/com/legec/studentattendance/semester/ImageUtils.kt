@@ -12,6 +12,7 @@ import com.microsoft.projectoxford.face.contract.FaceRectangle
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
+import java.util.*
 
 // The maximum side length of the image to detect, to keep the size of image less than 4MB.
 // Resize the image if its side length is larger than the maximum.
@@ -117,6 +118,22 @@ private fun getImageRotationAngle(imageUri: Uri, contentResolver: ContentResolve
         }
     }
     return angle
+}
+
+fun getImageTakenDate(imageUri: Uri, contentResolver: ContentResolver): Date {
+    val cursor = contentResolver
+            .query(imageUri, arrayOf(MediaStore.Images.ImageColumns.DATE_TAKEN), null, null, null)
+    if(cursor?.count == 1) {
+        cursor.moveToFirst()
+        val date = cursor.getLong(0)
+        cursor.close()
+        return Date(date)
+    } else {
+        val exif = ExifInterface(imageUri.path)
+        val date = exif.getAttribute(
+                ExifInterface.TAG_DATETIME)
+        return Date(date.toLong())
+    }
 }
 
 private fun calculateFaceRectangle(bitmap: Bitmap, faceRectangle: FaceRectangle, enlargeRatio: Double): FaceRectangle {

@@ -38,8 +38,8 @@ class SectionsPagerAdapter(fm: FragmentManager, semesterId: String) : FragmentPa
         return null
     }
 
-    fun addImage(imageUri: Uri) {
+    fun addImage(imageUri: Uri, fromCamera: Boolean) {
         val imgListFragment = fragments[0] as ImageListFragment
-        imgListFragment.addImage(imageUri)
+        imgListFragment.addImage(imageUri, fromCamera)
     }
 }
