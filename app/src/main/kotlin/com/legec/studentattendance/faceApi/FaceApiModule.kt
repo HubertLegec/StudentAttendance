@@ -19,7 +19,7 @@ class FaceApiModule(val mApplication: Application) {
 
     @Provides
     @Singleton
-    fun providesGroupingService(faceServiceClient: FaceServiceClient): FaceApiService {
-        return FaceApiService(faceServiceClient)
+    fun providesFaceApiService(faceServiceClient: FaceServiceClient): FaceApiService {
+        return FaceApiService(faceServiceClient, mApplication.contentResolver)
     }
 }

@@ -10,7 +10,7 @@ import butterknife.OnClick
 import com.legec.studentattendance.R
 
 
-class ImageViewHolder(view: View, val deleteCallback: (String) -> Unit) : RecyclerView.ViewHolder(view) {
+class ImageViewHolder(view: View, val deleteCallback: (String) -> Unit, val clickCallback: (String) -> Unit) : RecyclerView.ViewHolder(view) {
     @BindView(R.id.thumbnail)
     lateinit var thumbnail: ImageView
     @BindView(R.id.img_date)
@@ -26,6 +26,11 @@ class ImageViewHolder(view: View, val deleteCallback: (String) -> Unit) : Recycl
         if (id != null) {
             deleteCallback(id!!)
         }
+    }
+
+    @OnClick(R.id.thumbnail)
+    fun onImageClick() {
+        clickCallback(id!!)
     }
 
 }

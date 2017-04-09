@@ -2,6 +2,7 @@ package com.legec.studentattendance
 
 import android.app.Application
 import android.content.Context
+import com.legec.studentattendance.semester.imagesList.ImageRepository
 import com.legec.studentattendance.semesterList.SemesterRepository
 import dagger.Module
 import dagger.Provides
@@ -26,5 +27,11 @@ class AppModule(val mApplication: Application) {
     @Singleton
     fun providesSemesterRepository(): SemesterRepository {
         return SemesterRepository()
+    }
+
+    @Provides
+    @Singleton
+    fun providesImagesRepository(): ImageRepository {
+        return ImageRepository(mApplication.contentResolver)
     }
 }

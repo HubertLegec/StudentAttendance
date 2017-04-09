@@ -2,12 +2,18 @@ package com.legec.studentattendance.faceApi
 
 import android.os.AsyncTask
 import android.util.Log
+import com.legec.studentattendance.faces.FaceDescription
+import com.legec.studentattendance.faces.FaceDescriptionRepository
+import com.legec.studentattendance.semester.imagesList.ImageRepository
 import com.microsoft.projectoxford.face.FaceServiceClient
 import com.microsoft.projectoxford.face.contract.Face
 import java.io.InputStream
 
 
-class DetectionTask(val faceServiceClient: FaceServiceClient, val callback: DetectionCallback) : AsyncTask<InputStream, String, List<Face>>() {
+class DetectionTask(
+        private val faceServiceClient: FaceServiceClient,
+        private val callback: DetectionCallback
+) : AsyncTask<InputStream, String, List<Face>>() {
     private val TAG = "DetectionTask"
     private var mSucceed = true
 
@@ -17,12 +23,13 @@ class DetectionTask(val faceServiceClient: FaceServiceClient, val callback: Dete
 
             // Start detection.
             return faceServiceClient.detect(
-                    params[0], /* Input stream of image to detect */
+                    params[0], /* Input stream of image to detectAndSave */
                     true, /* Whether to return face ID */
                     false, /* Whether to return face landmarks */
                     /* Which face attributes to analyze, currently we support:
                            age,gender,headPose,smile,facialHair */
                     null).toList()
+
         } catch (e: Exception) {
             mSucceed = false
             publishProgress(e.message)

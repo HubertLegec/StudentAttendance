@@ -3,16 +3,14 @@ package com.legec.studentattendance.semester.imagesList
 import android.content.ContentResolver
 import android.net.Uri
 import android.util.Log
-import com.legec.studentattendance.semester.getImageTakenDate
+import com.legec.studentattendance.utils.getImageTakenDate
 import io.realm.Realm
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Singleton
 
 
-@Singleton
 class ImageRepository(private val contentResolver: ContentResolver) {
     private val TAG = "ImageRepository"
     private val realm = Realm.getDefaultInstance()
@@ -26,6 +24,13 @@ class ImageRepository(private val contentResolver: ContentResolver) {
         image.updateValues(imageUri, dateTaken, semesterId, fromCamera)
         realm.commitTransaction()
         return image
+    }
+
+    fun getImageById(imageId: String): Image? {
+        return realm
+                .where(Image::class.java)
+                .equalTo("id", imageId)
+                .findFirst()
     }
 
     fun getImagesForSemester(semesterId: String): List<Image> {

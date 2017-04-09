@@ -1,6 +1,7 @@
 package com.legec.studentattendance.semester.imagesList
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -15,11 +16,14 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.legec.studentattendance.R
 import com.legec.studentattendance.StudentAttendanceApp
+import com.legec.studentattendance.faces.FacesActivity
 import java.util.*
 import javax.inject.Inject
 
 
 class ImageListFragment(private val semesterId: String) : Fragment() {
+    private val IMAGE_ID_MESSAGE = "com.legec.StudentAttendance.IMAGE_ID_MESSAGE"
+
     @BindView(R.id.recycler_view)
     lateinit var recyclerView: RecyclerView
 
@@ -40,6 +44,12 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
         dialog.show()
     }
 
+    val onClickImage: (String) -> Unit = { id: String ->
+        val intent = Intent(this.context, FacesActivity::class.java)
+        intent.putExtra(IMAGE_ID_MESSAGE, id)
+        startActivity(intent)
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater!!.inflate(R.layout.fragment_images_list, container, false)
@@ -47,7 +57,7 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
         StudentAttendanceApp.semesterComponent.inject(this)
         val layoutManager = GridLayoutManager(this.context, 1)
         images.addAll(imageRepository.getImagesForSemester(semesterId))
-        adapter = GalleryAdapter(this.context, images, onDeleteImage)
+        adapter = GalleryAdapter(this.context, images, onDeleteImage, onClickImage)
         recyclerView.layoutManager = layoutManager
         recyclerView.itemAnimator = DefaultItemAnimator()
         recyclerView.adapter = adapter
@@ -59,9 +69,10 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
         unbinder.unbind()
     }
 
-    fun addImage(imageUri: Uri, fromCamera: Boolean) {
+    fun addImage(imageUri: Uri, fromCamera: Boolean): Image {
         val image = imageRepository.saveImage(imageUri, semesterId, fromCamera)
         images.add(image)
         adapter.notifyDataSetChanged()
+        return image
     }
 }

@@ -4,6 +4,8 @@ import android.net.Uri
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import com.legec.studentattendance.semester.imagesList.ClickListener
+import com.legec.studentattendance.semester.imagesList.Image
 import com.legec.studentattendance.semester.imagesList.ImageListFragment
 import com.legec.studentattendance.semester.studentList.StudentListFragment
 
@@ -38,8 +40,8 @@ class SectionsPagerAdapter(fm: FragmentManager, semesterId: String) : FragmentPa
         return null
     }
 
-    fun addImage(imageUri: Uri, fromCamera: Boolean) {
+    fun addImage(imageUri: Uri, fromCamera: Boolean): Image {
         val imgListFragment = fragments[0] as ImageListFragment
-        imgListFragment.addImage(imageUri, fromCamera)
+        return imgListFragment.addImage(imageUri, fromCamera)
     }
 }

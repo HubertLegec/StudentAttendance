@@ -7,8 +7,10 @@ import com.microsoft.projectoxford.face.contract.GroupResult
 import java.util.*
 
 
-class GroupingTask(val faceServiceClient: FaceServiceClient, val callback: GroupingCallback)
-    : AsyncTask<UUID, String, GroupResult>() {
+class GroupingTask(
+        private val faceServiceClient: FaceServiceClient,
+        private val callback: GroupingCallback
+) : AsyncTask<UUID, String, GroupResult>() {
     private val TAG = "GroupingTask"
 
     override fun doInBackground(vararg params: UUID): GroupResult? {

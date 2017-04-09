@@ -1,4 +1,4 @@
-package com.legec.studentattendance.semester
+package com.legec.studentattendance.utils
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
@@ -14,7 +14,7 @@ import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.util.*
 
-// The maximum side length of the image to detect, to keep the size of image less than 4MB.
+// The maximum side length of the image to detectAndSave, to keep the size of image less than 4MB.
 // Resize the image if its side length is larger than the maximum.
 private val IMAGE_MAX_SIDE_LENGTH = 1280
 

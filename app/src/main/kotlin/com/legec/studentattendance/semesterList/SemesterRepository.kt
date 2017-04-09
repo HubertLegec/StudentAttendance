@@ -3,13 +3,12 @@ package com.legec.studentattendance.semesterList
 import android.util.Log
 import io.realm.Realm
 import java.util.*
-import javax.inject.Singleton
 
 
-@Singleton
+
 class SemesterRepository {
     private val TAG = "SemesterRepository"
-    val realm: Realm = Realm.getDefaultInstance()
+    private val realm: Realm = Realm.getDefaultInstance()
 
     fun saveSemester(subjectName: String, semesterName: String) : Semester {
         realm.beginTransaction()

@@ -12,13 +12,14 @@ import com.legec.studentattendance.R
 class GalleryAdapter(
         val context: Context,
         val images: MutableList<Image>,
-        val deleteCallback: (String) -> Unit
-): RecyclerView.Adapter<ImageViewHolder>() {
+        val deleteCallback: (String) -> Unit,
+        val clickCallback: (String) -> Unit
+) : RecyclerView.Adapter<ImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ImageViewHolder {
         val itemView = LayoutInflater.from(parent?.context)
                 .inflate(R.layout.gallery_thumbnail, parent, false)
-        return ImageViewHolder(itemView, deleteCallback)
+        return ImageViewHolder(itemView, deleteCallback, clickCallback)
     }
 
     override fun getItemCount(): Int {

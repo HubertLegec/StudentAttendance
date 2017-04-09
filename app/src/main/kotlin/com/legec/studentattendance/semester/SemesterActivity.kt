@@ -16,21 +16,19 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.legec.studentattendance.R
-import com.legec.studentattendance.StudentAttendanceApp
-import com.legec.studentattendance.faceApi.DetectionCallback
-import com.legec.studentattendance.faceApi.FaceApiService
-import com.microsoft.projectoxford.face.contract.Face
+import com.legec.studentattendance.faces.FacesActivity
+import com.legec.studentattendance.semester.imagesList.ClickListener
 import java.io.File
 import java.io.IOException
-import javax.inject.Inject
 
 class SemesterActivity : AppCompatActivity() {
     private val SEMESTER_MESSAGE = "com.legec.StudentAttendance.SEMESTER_MESSAGE"
+    private val URI_MESSAGE = "com.legec.StudentAttendance.URI_MESSAGE"
+    private val IMAGE_ID_MESSAGE = "com.legec.StudentAttendance.IMAGE_ID_MESSAGE"
     private val TAG = "SemesterActivity"
     private val REQUEST_TAKE_PHOTO = 0
     private val REQUEST_PHOTO_FROM_GALLERY = 1
@@ -41,26 +39,20 @@ class SemesterActivity : AppCompatActivity() {
     lateinit var mViewPager: ViewPager
     @BindView(R.id.tabs)
     lateinit var tabLayout: TabLayout
-    @BindView(R.id.progressbar_view)
-    lateinit var loader: LinearLayout
 
     lateinit private var mSectionsPagerAdapter: SectionsPagerAdapter
     lateinit private var semesterId: String
     private var takenPhotoUri: Uri? = null
 
-    @Inject lateinit var faceApiService: FaceApiService
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_semester)
         ButterKnife.bind(this)
-        StudentAttendanceApp.semesterComponent.inject(this)
         setSupportActionBar(toolbar)
         semesterId = intent.getStringExtra(SEMESTER_MESSAGE)
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager, semesterId)
         mViewPager.adapter = mSectionsPagerAdapter
         tabLayout.setupWithViewPager(mViewPager)
-        loader.visibility = View.GONE
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
@@ -115,26 +107,13 @@ class SemesterActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if ((requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_PHOTO_FROM_GALLERY)
-                && resultCode == Activity.RESULT_OK) {
+        if (requestCode in arrayListOf(REQUEST_PHOTO_FROM_GALLERY, REQUEST_TAKE_PHOTO) && resultCode == Activity.RESULT_OK) {
             val imageUri = data?.data ?: takenPhotoUri!!
-            mSectionsPagerAdapter.addImage(imageUri, requestCode == REQUEST_TAKE_PHOTO)
-            val bitmap = loadSizeLimitedBitmap(imageUri, contentResolver)
-            val imageInputStream = compressBitmapToJpeg(bitmap)
-            faceApiService.detect(imageInputStream, object: DetectionCallback {
-                override fun onPreExecute() {
-                    loader.visibility = View.VISIBLE
-                }
-
-                override fun onProgressUpdate(value: String) {
-                    Log.i(TAG, value)
-                }
-
-                override fun onPostExecute(result: List<Face>) {
-                    loader.visibility = View.GONE
-                }
-
-            })
+            val image = mSectionsPagerAdapter.addImage(imageUri, requestCode == REQUEST_TAKE_PHOTO)
+            val intent = Intent(this, FacesActivity::class.java)
+            intent.putExtra(URI_MESSAGE, imageUri)
+            intent.putExtra(IMAGE_ID_MESSAGE, image.id)
+            startActivity(intent)
         }
     }
 }
