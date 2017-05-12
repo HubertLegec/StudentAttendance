@@ -3,6 +3,7 @@ package com.legec.studentattendance.semester.imagesList
 import android.content.ContentResolver
 import android.net.Uri
 import android.util.Log
+import com.legec.studentattendance.semesterList.Semester
 import com.legec.studentattendance.utils.getImageTakenDate
 import io.realm.Realm
 import java.io.File
@@ -22,6 +23,10 @@ class ImageRepository(private val contentResolver: ContentResolver) {
         realm.beginTransaction()
         val image = realm.createObject(Image::class.java, UUID.randomUUID().toString())
         image.updateValues(imageUri, dateTaken, semesterId, fromCamera)
+        realm.where(Semester::class.java)
+                .equalTo("id", semesterId)
+                .findFirst()
+                .isUpToDate = false
         realm.commitTransaction()
         return image
     }
@@ -48,6 +53,11 @@ class ImageRepository(private val contentResolver: ContentResolver) {
                 .equalTo("id", imageId)
                 .findFirst()
         if (img != null) {
+            val semesterId = img.semesterId
+            realm.where(Semester::class.java)
+                    .equalTo("id", semesterId)
+                    .findFirst()
+                    .isUpToDate = false
             deleteImageIfFromCamera(img)
             img.deleteFromRealm()
         }
