@@ -13,7 +13,6 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.legec.studentattendance.R
 import com.legec.studentattendance.StudentAttendanceApp
-import com.legec.studentattendance.faceApi.DetectionCallback
 import com.legec.studentattendance.semester.imagesList.ImageRepository
 import com.microsoft.projectoxford.face.contract.Face
 import javax.inject.Inject

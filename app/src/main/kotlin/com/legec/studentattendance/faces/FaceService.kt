@@ -2,8 +2,6 @@ package com.legec.studentattendance.faces
 
 import android.content.ContentResolver
 import android.net.Uri
-import com.legec.studentattendance.faceApi.DetectionCallback
-import com.legec.studentattendance.faceApi.DetectionTask
 import com.legec.studentattendance.utils.compressBitmapToJpeg
 import com.legec.studentattendance.utils.loadSizeLimitedBitmap
 import com.microsoft.projectoxford.face.FaceServiceClient

@@ -1,4 +1,4 @@
-package com.legec.studentattendance.faceApi
+package com.legec.studentattendance.utils
 
 import android.content.Context
 import android.util.AttributeSet

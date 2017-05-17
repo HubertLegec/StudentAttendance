@@ -1,4 +1,4 @@
-package com.legec.studentattendance.faceApi
+package com.legec.studentattendance.semester.studentList
 
 import com.microsoft.projectoxford.face.contract.GroupResult
 

@@ -56,6 +56,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     kapt 'com.jakewharton:butterknife-compiler:8.0.1'
     kapt 'com.google.dagger:dagger-compiler:2.4'
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.uphyca:stetho_realm:2.0.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
 }
 
@@ -65,4 +67,7 @@ kapt {
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    }
 }

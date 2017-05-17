@@ -16,12 +16,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.legec.studentattendance.R
 import com.legec.studentattendance.faces.FacesActivity
-import com.legec.studentattendance.semester.imagesList.ClickListener
+import com.legec.studentattendance.utils.PermissionHelper
 import java.io.File
 import java.io.IOException
 
@@ -40,6 +41,7 @@ class SemesterActivity : AppCompatActivity() {
     @BindView(R.id.tabs)
     lateinit var tabLayout: TabLayout
 
+    private val permissionHelper = PermissionHelper(this)
     lateinit private var mSectionsPagerAdapter: SectionsPagerAdapter
     lateinit private var semesterId: String
     private var takenPhotoUri: Uri? = null
@@ -53,6 +55,11 @@ class SemesterActivity : AppCompatActivity() {
         mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager, semesterId)
         mViewPager.adapter = mSectionsPagerAdapter
         tabLayout.setupWithViewPager(mViewPager)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        permissionHelper.checkWriteStoragePermission()
     }
 
     override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
@@ -115,5 +122,21 @@ class SemesterActivity : AppCompatActivity() {
             intent.putExtra(IMAGE_ID_MESSAGE, image.id)
             startActivity(intent)
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            permissionHelper.WRITE_STORAGE_REQUEST_CODE -> {
+                if (permissionHelper.isWriteStoragePermissionGranted(grantResults)) {
+                    //googleLocationService.connectApiClient(this)
+                } else {
+                    // permission denied
+                    // TODO Disable the functionality that depends on this permission.
+                    Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

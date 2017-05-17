@@ -1,10 +1,7 @@
-package com.legec.studentattendance.faceApi
+package com.legec.studentattendance.faces
 
 import android.os.AsyncTask
 import android.util.Log
-import com.legec.studentattendance.faces.FaceDescription
-import com.legec.studentattendance.faces.FaceDescriptionRepository
-import com.legec.studentattendance.semester.imagesList.ImageRepository
 import com.microsoft.projectoxford.face.FaceServiceClient
 import com.microsoft.projectoxford.face.contract.Face
 import java.io.InputStream

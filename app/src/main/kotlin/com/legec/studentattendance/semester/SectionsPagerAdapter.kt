@@ -4,7 +4,6 @@ import android.net.Uri
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import com.legec.studentattendance.semester.imagesList.ClickListener
 import com.legec.studentattendance.semester.imagesList.Image
 import com.legec.studentattendance.semester.imagesList.ImageListFragment
 import com.legec.studentattendance.semester.studentList.StudentListFragment
@@ -20,7 +19,7 @@ class SectionsPagerAdapter(fm: FragmentManager, semesterId: String) : FragmentPa
     init {
         fragments = HashMap()
         fragments[0] = ImageListFragment(semesterId)
-        fragments[1] = StudentListFragment()
+        fragments[1] = StudentListFragment(semesterId)
     }
 
     override fun getItem(position: Int): Fragment {

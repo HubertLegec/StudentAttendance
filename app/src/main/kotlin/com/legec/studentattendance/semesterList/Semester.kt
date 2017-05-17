@@ -9,5 +9,5 @@ open class Semester : RealmObject() {
     var id: String = ""
     var subjectName: String = ""
     var semesterName: String = ""
-    var isUpToDate: Boolean = true
+    var upToDate: Boolean = true
 }

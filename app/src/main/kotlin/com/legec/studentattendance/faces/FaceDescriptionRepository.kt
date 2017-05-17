@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
+import com.legec.studentattendance.semester.imagesList.Image
 import com.legec.studentattendance.utils.generateFaceThumbnail
 import com.legec.studentattendance.utils.loadSizeLimitedBitmap
 import com.legec.studentattendance.utils.savebitmap
@@ -23,11 +24,21 @@ class FaceDescriptionRepository(val contentResolver: ContentResolver) {
                 .findAll()
     }
 
+    fun getSavedFacesForSemester(semesterId: String): List<FaceDescription> {
+        return realm.where(FaceDescription::class.java)
+                .equalTo("semesterId", semesterId)
+                .findAll()
+    }
+
     fun saveFaces(faces: List<Face>, imageId: String, imageUri: Uri): List<FaceDescription> {
         Log.i(TAG, "save faces for image: " + imageId)
         val bitmap = loadSizeLimitedBitmap(imageUri, contentResolver)
+        val semesterId = realm.where(Image::class.java)
+                .equalTo("id", imageId)
+                .findFirst()
+                .semesterId
         realm.beginTransaction()
-        val faceDescriptions = faces.map { face -> createFaceDescription(face, imageId, bitmap) }
+        val faceDescriptions = faces.map { face -> createFaceDescription(face, imageId, semesterId, bitmap) }
         realm.commitTransaction()
         return faceDescriptions
     }
@@ -42,11 +53,11 @@ class FaceDescriptionRepository(val contentResolver: ContentResolver) {
         realm.commitTransaction()
     }
 
-    private fun createFaceDescription(face: Face, imageId: String, originalImage: Bitmap): FaceDescription {
+    private fun createFaceDescription(face: Face, imageId: String, semesterId: String, originalImage: Bitmap): FaceDescription {
         val thumbnail = generateFaceThumbnail(originalImage, face.faceRectangle)
         val thumbnailUri = savebitmap(thumbnail, face.faceId.toString())
         val faceDesc: FaceDescription = realm.createObject(FaceDescription::class.java, UUID.randomUUID().toString())
-        faceDesc.fillValuesFromFace(face, imageId, thumbnailUri)
+        faceDesc.fillValuesFromFace(face, imageId, semesterId, thumbnailUri)
         return faceDesc
     }
 }

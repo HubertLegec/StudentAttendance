@@ -1,7 +1,8 @@
-package com.legec.studentattendance.faceApi
+package com.legec.studentattendance.semester.studentList
 
 import android.os.AsyncTask
 import android.util.Log
+import com.legec.studentattendance.semester.studentList.GroupingCallback
 import com.microsoft.projectoxford.face.FaceServiceClient
 import com.microsoft.projectoxford.face.contract.GroupResult
 import java.util.*

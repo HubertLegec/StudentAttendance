@@ -20,6 +20,12 @@ class SemesterRepository {
         return semester
     }
 
+    fun getSemesterById(semesterId: String): Semester {
+        return realm.where(Semester::class.java)
+                .equalTo("id", semesterId)
+                .findFirst()
+    }
+
     fun getSavedSemesters() : List<Semester> {
         return realm
                 .where(Semester::class.java)
