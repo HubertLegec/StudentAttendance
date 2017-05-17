@@ -12,6 +12,7 @@ import butterknife.OnClick
 import com.legec.studentattendance.R
 import com.legec.studentattendance.StudentAttendanceApp
 import com.legec.studentattendance.semester.SemesterActivity
+import com.legec.studentattendance.semester.imagesList.ImageRepository
 import javax.inject.Inject
 
 class SemesterListActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class SemesterListActivity : AppCompatActivity() {
     lateinit var semesterListAdapter: SemesterListAdapter
 
     @Inject lateinit var semesterRepository: SemesterRepository
+    @Inject lateinit var imageRepository: ImageRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class SemesterListActivity : AppCompatActivity() {
                 { id ->
                     semesterListAdapter.deleteElem(id)
                     semesterRepository.deleteSemester(id)
+                    imageRepository.deleteImagesBySemester(id)
                 },
                 { id, oldSubject, oldSemester ->
                     onEditSemester(id, oldSubject, oldSemester)

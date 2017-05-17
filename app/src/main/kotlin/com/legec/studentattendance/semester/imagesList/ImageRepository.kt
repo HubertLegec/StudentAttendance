@@ -58,7 +58,7 @@ class ImageRepository(private val contentResolver: ContentResolver) {
             realm.where(Semester::class.java)
                     .equalTo("id", semesterId)
                     .findFirst()
-                    .upToDate = false
+                    ?.upToDate = false
             realm.where(FaceDescription::class.java)
                     .equalTo("imageId", imageId)
                     .findAll()
