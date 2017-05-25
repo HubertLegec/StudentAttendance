@@ -8,4 +8,5 @@ open class Student : RealmObject() {
     @PrimaryKey
     var id: String = ""
     var semesterId: String = ""
+    var name: String = "student name"
 }
