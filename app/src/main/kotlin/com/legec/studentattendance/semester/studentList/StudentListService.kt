@@ -20,6 +20,7 @@ class StudentListService(
     fun getSemesterFacesGroups(semesterId: String, callback: StudentFacesCallback) {
         val semester = semesterRepository.getSemesterById(semesterId)
         if (!semester.upToDate) {
+
             groupFaces(semesterId, object : GroupingCallback {
                 override fun onPreExecute() {}
 

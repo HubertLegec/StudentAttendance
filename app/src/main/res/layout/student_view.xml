@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/student_thumbnail"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:layout_height="match_parent"
         android:src="@drawable/delete"
         android:padding="6dp"/>

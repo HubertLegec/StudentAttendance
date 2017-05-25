@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Subject"
+        android:hint="@string/subject"
         android:inputType="text" />
 
     <EditText
@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:hint="Semester"
+        android:hint="@string/semester"
         android:inputType="textPersonName" />
 </LinearLayout>

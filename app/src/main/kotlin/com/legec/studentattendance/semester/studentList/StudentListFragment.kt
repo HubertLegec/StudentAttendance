@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.LinearLayout
 import android.widget.ListView
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -28,6 +29,8 @@ class StudentListFragment(private val semesterId: String) : Fragment() {
 
     @BindView(R.id.student_list)
     lateinit var studentList: ListView
+    @BindView(R.id.progressbar_view)
+    lateinit var loader: LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val rootView = inflater!!.inflate(R.layout.fragment_student_list, container, false)
@@ -45,11 +48,15 @@ class StudentListFragment(private val semesterId: String) : Fragment() {
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         if (isVisibleToUser) {
+            loader.visibility = View.VISIBLE
+            adapter.update(emptyMap())
+            adapter.notifyDataSetChanged()
             studentListService.getSemesterFacesGroups(semesterId, object : StudentFacesCallback {
                 override fun onSuccess(result: Map<Student, List<FaceDescription>>) {
                     Log.i(TAG, "faces success")
                     adapter.update(result)
                     adapter.notifyDataSetChanged()
+                    loader.visibility = View.GONE
                 }
 
             })
