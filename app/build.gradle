@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'realm-android'
 
 buildscript {
@@ -59,10 +60,6 @@ dependencies {
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.uphyca:stetho_realm:2.0.0'
     provided 'org.glassfish:javax.annotation:10.0-b28'
-}
-
-kapt {
-    generateStubs = true
 }
 
 repositories {
