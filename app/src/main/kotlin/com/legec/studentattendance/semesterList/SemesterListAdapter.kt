@@ -23,13 +23,11 @@ class SemesterListAdapter(
             holder = v.tag as SemesterView
         } else {
             v = inflater.inflate(R.layout.semester_view, parent, false)
-            holder = SemesterView(v, deleteSemCallback, editSemCallback, semester.id)
+            holder = SemesterView(v, deleteSemCallback, editSemCallback)
             v!!.tag = holder
         }
 
-        holder.semesterName.text = semester.semesterName
-        holder.subjectName.text = semester.subjectName
-        holder.id = semester.id
+        holder.setValues(semester)
         return v
     }
 

@@ -13,9 +13,9 @@ import com.legec.studentattendance.R
 
 class NewSemesterDialog(val createSemesterCallback: (String, String) -> Unit, val subjectName: String, val semesterName: String) : DialogFragment() {
     @BindView(R.id.subject_name_tv)
-    lateinit var subjectTV : TextView
+    lateinit var subjectTV: TextView
     @BindView(R.id.semester_name_tv)
-    lateinit var semesterTV : TextView
+    lateinit var semesterTV: TextView
 
     constructor(createSemesterCallback: (String, String) -> Unit) : this(createSemesterCallback, "", "")
 
@@ -26,9 +26,7 @@ class NewSemesterDialog(val createSemesterCallback: (String, String) -> Unit, va
         ButterKnife.bind(this, view)
         builder.setView(view)
                 .setPositiveButton("OK", { _, _ -> })
-                .setNegativeButton("Cancel", { dialog, _ ->
-                    dialog.cancel()
-                })
+                .setNegativeButton("Cancel", { dialog, _ -> dialog.cancel() })
         subjectTV.text = subjectName
         semesterTV.text = semesterName
         return builder.create()

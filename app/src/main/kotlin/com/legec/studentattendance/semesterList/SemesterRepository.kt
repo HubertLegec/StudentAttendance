@@ -5,10 +5,9 @@ import io.realm.Realm
 import java.util.*
 
 
-
 class SemesterRepository {
     private val TAG = "SemesterRepository"
-    private val realm: Realm = Realm.getDefaultInstance()
+    private val realm = Realm.getDefaultInstance()
 
     fun saveSemester(subjectName: String, semesterName: String) : Semester {
         realm.beginTransaction()

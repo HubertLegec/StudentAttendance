@@ -8,14 +8,21 @@ import butterknife.OnClick
 import com.legec.studentattendance.R
 
 
-class SemesterView(view: View, val deleteCallback: (String) -> Unit, val editCallback: (String, String, String) -> Unit, var id: String) {
+class SemesterView(view: View, val deleteCallback: (String) -> Unit, val editCallback: (String, String, String) -> Unit) {
     @BindView(R.id.subject_name)
     lateinit var subjectName: TextView
     @BindView(R.id.semester_name)
     lateinit var semesterName: TextView
+    var id: String = ""
 
     init {
         ButterKnife.bind(this, view)
+    }
+
+    fun setValues(semester: Semester) {
+        this.id = semester.id
+        this.subjectName.text = semester.subjectName
+        this.semesterName.text = semester.semesterName
     }
 
     @OnClick(R.id.delete_button)
