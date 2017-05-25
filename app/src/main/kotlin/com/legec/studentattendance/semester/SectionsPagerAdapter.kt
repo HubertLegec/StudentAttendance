@@ -22,8 +22,10 @@ class SectionsPagerAdapter(fm: FragmentManager, semesterId: String) : FragmentPa
         fragments[1] = StudentListFragment(semesterId)
     }
 
+    /**
+     * getItem is called to instantiate the fragment for the given page.
+     */
     override fun getItem(position: Int): Fragment {
-        // getItem is called to instantiate the fragment for the given page.
         return fragments[position]!!
     }
 

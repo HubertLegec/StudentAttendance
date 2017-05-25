@@ -2,7 +2,6 @@ package com.legec.studentattendance.semester.studentList
 
 import android.os.AsyncTask
 import android.util.Log
-import com.legec.studentattendance.semester.studentList.GroupingCallback
 import com.microsoft.projectoxford.face.FaceServiceClient
 import com.microsoft.projectoxford.face.contract.GroupResult
 import java.util.*
@@ -17,7 +16,7 @@ class GroupingTask(
     override fun doInBackground(vararg params: UUID): GroupResult? {
         Log.i(TAG, "Request: Grouping " + params.size + " face(s)")
         try {
-            //publishProgress("Grouping...")
+            publishProgress("Grouping...")
 
             // Start grouping, params are face IDs.
             return faceServiceClient.group(params)

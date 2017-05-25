@@ -30,6 +30,12 @@ class FaceDescriptionRepository(val contentResolver: ContentResolver) {
                 .findAll()
     }
 
+    fun getSavedFacesForStudent(studentId: String): List<FaceDescription> {
+        return realm.where(FaceDescription::class.java)
+                .equalTo("studentId", studentId)
+                .findAll()
+    }
+
     fun saveFaces(faces: List<Face>, imageId: String, imageUri: Uri): List<FaceDescription> {
         Log.i(TAG, "save faces for image: " + imageId)
         val bitmap = loadSizeLimitedBitmap(imageUri, contentResolver)

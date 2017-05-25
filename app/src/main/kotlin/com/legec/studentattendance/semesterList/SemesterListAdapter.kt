@@ -16,7 +16,7 @@ class SemesterListAdapter(
 ) : BaseAdapter() {
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
-        val semester: Semester = getItem(position) as Semester
+        val semester = semesters[position]
         var v = view
         val holder: SemesterView
         if (v != null) {
@@ -36,7 +36,7 @@ class SemesterListAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return 0
+        return position.toLong()
     }
 
     override fun getCount(): Int {

@@ -5,7 +5,7 @@ import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
 
-open class Image: RealmObject() {
+open class Image : RealmObject() {
     @PrimaryKey
     var id: String = ""
     var uri: String = ""
@@ -13,7 +13,7 @@ open class Image: RealmObject() {
     var semesterId: String = ""
     var fromCamera: Boolean = false
 
-    fun updateValues(uri: Uri, date: String, semesterId: String, fromCamera: Boolean){
+    fun updateValues(uri: Uri, date: String, semesterId: String, fromCamera: Boolean) {
         this.uri = uri.toString()
         this.date = date
         this.semesterId = semesterId

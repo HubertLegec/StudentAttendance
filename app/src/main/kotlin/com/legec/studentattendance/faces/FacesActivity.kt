@@ -22,6 +22,7 @@ class FacesActivity: AppCompatActivity() {
     private val TAG = "FacesActivity"
     private val URI_MESSAGE = "com.legec.StudentAttendance.URI_MESSAGE"
     private val IMAGE_ID_MESSAGE = "com.legec.StudentAttendance.IMAGE_ID_MESSAGE"
+    private val STUDENT_MESSAGE = "com.legec.StudentAttendance.STUDENT_MESSAGE"
     @Inject lateinit var faceService: FaceService
     @Inject lateinit var faceDescriptionRepository: FaceDescriptionRepository
     @Inject lateinit var imageRepository: ImageRepository
@@ -48,8 +49,11 @@ class FacesActivity: AppCompatActivity() {
         val imageUri = intent.getParcelableExtra<Uri>(URI_MESSAGE)
         if(imageUri != null) {
             detectFaces(imageUri, imageId)
-        } else {
+        } else if (imageId != null) {
             loadFaces(imageId)
+        } else {
+            val studentId = intent.getStringExtra(STUDENT_MESSAGE)
+            loadStudentFaces(studentId)
         }
     }
 
@@ -75,6 +79,11 @@ class FacesActivity: AppCompatActivity() {
 
     private fun loadFaces(imageId: String) {
         val faces = faceDescriptionRepository.getSavedFacesForImage(imageId)
+        adapter.addFaces(faces)
+    }
+
+    private fun loadStudentFaces(studentId: String) {
+        val faces = faceDescriptionRepository.getSavedFacesForStudent(studentId)
         adapter.addFaces(faces)
     }
 }

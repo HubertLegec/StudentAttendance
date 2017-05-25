@@ -44,7 +44,7 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
         dialog.show()
     }
 
-    val onClickImage: (String) -> Unit = { id: String ->
+    val onClickImage = { id: String ->
         val intent = Intent(this.context, FacesActivity::class.java)
         intent.putExtra(IMAGE_ID_MESSAGE, id)
         startActivity(intent)

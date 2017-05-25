@@ -38,7 +38,8 @@ class GalleryAdapter(
     }
 
     fun deleteImage(id: String) {
-        val img = images.find { img -> img.id == id }
+        val img = images
+                .find { img -> img.id == id }
         if (img != null) {
             images.remove(img)
             notifyDataSetChanged()

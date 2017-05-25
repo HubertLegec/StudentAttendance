@@ -74,15 +74,15 @@ class ImageRepository(private val contentResolver: ContentResolver) {
         realm.where(Image::class.java)
                 .equalTo("semesterId", semesterId)
                 .findAll()
-                .map {img -> img.id }
+                .map { img -> img.id }
                 .forEach { id -> deleteImage(id) }
     }
 
     private fun deleteImageIfFromCamera(img: Image) {
         if (img.fromCamera) {
             try {
-            val file = File(img.uri)
-            file.delete()
+                val file = File(img.uri)
+                file.delete()
             } catch (e: IOException) {
                 Log.e(TAG, e.message)
             }

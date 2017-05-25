@@ -1,41 +1,44 @@
 package com.legec.studentattendance.semester.studentList
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ListView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.legec.studentattendance.R
 import com.legec.studentattendance.StudentAttendanceApp
 import com.legec.studentattendance.faces.FaceDescription
+import com.legec.studentattendance.faces.FacesActivity
 import javax.inject.Inject
 
 
 class StudentListFragment(private val semesterId: String) : Fragment() {
+    private val STUDENT_MESSAGE = "com.legec.StudentAttendance.STUDENT_MESSAGE"
     private val TAG = "StudentListFragment"
     lateinit private var adapter: StudentListAdapter
     lateinit private var unbinder: Unbinder
     @Inject lateinit var studentListService: StudentListService
 
-    @BindView(R.id.student_recycler_view)
-    lateinit var recyclerView: RecyclerView
+    @BindView(R.id.student_list)
+    lateinit var studentList: ListView
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val rootView = inflater!!.inflate(R.layout.fragment_student_list, container, false)
         unbinder = ButterKnife.bind(this, rootView)
         StudentAttendanceApp.semesterComponent.inject(this)
-        val layoutManager = GridLayoutManager(this.context, 1)
         adapter = StudentListAdapter(this.context)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = layoutManager
-        recyclerView.itemAnimator = DefaultItemAnimator()
+        studentList.adapter = adapter
+        studentList.onItemClickListener =
+                AdapterView.OnItemClickListener { parent, view, position, id ->
+                    onStudentClick(adapter.getStudent(position))
+                }
         return rootView
     }
 
@@ -56,5 +59,11 @@ class StudentListFragment(private val semesterId: String) : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         unbinder.unbind()
+    }
+
+    private fun onStudentClick(student: Student) {
+        val intent = Intent(this.activity, FacesActivity::class.java)
+        intent.putExtra(STUDENT_MESSAGE, student.id)
+        startActivity(intent)
     }
 }

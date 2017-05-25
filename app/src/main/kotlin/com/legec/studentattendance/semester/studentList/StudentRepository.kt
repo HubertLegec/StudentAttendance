@@ -19,24 +19,13 @@ class StudentRepository {
                 .findAll()
                 .deleteAllFromRealm()
         faces.forEach { faceGroup ->
-            val studentId = UUID.randomUUID().toString()
-            val student = realm.createObject(Student::class.java, studentId)
-            student.semesterId = semesterId
-            assignFacesToStudent(studentId, faceGroup)
+            createStudent(faceGroup, semesterId)
         }
         realm.where(Semester::class.java)
                 .equalTo("id", semesterId)
                 .findFirst()
                 .upToDate = true
         realm.commitTransaction()
-    }
-
-    private fun assignFacesToStudent(studentId: String, faceUUIDs: Array<UUID>) {
-        val faceIds = faceUUIDs.map { uuid -> uuid.toString()}.toTypedArray()
-        realm.where(FaceDescription::class.java)
-                .`in`("faceId", faceIds)
-                .findAll()
-                .forEach { f -> f.studentId = studentId }
     }
 
     fun getStudentFaces(semesterId: String): Map<Student, List<FaceDescription>> {
@@ -50,5 +39,20 @@ class StudentRepository {
                             .findAll()
                             .toList()
                 })
+    }
+
+    private fun createStudent(faceGroup: Array<UUID>, semesterId: String) {
+        val studentId = UUID.randomUUID().toString()
+        val student = realm.createObject(Student::class.java, studentId)
+        student.semesterId = semesterId
+        assignFacesToStudent(studentId, faceGroup)
+    }
+
+    private fun assignFacesToStudent(studentId: String, faceUUIDs: Array<UUID>) {
+        val faceIds = faceUUIDs.map { uuid -> uuid.toString()}.toTypedArray()
+        realm.where(FaceDescription::class.java)
+                .`in`("faceId", faceIds)
+                .findAll()
+                .forEach { f -> f.studentId = studentId }
     }
 }

@@ -7,10 +7,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.legec.studentattendance.semester.studentList.StudentListFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/student_recycler_view"
+    <ListView
+        android:id="@+id/student_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
