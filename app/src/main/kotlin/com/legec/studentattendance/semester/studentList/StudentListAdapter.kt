@@ -1,6 +1,6 @@
 package com.legec.studentattendance.semester.studentList
 
-import android.content.Context
+import android.app.Activity
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,8 @@ import com.legec.studentattendance.R
 import com.legec.studentattendance.faces.FaceDescription
 
 
-class StudentListAdapter(val context: Context) : BaseAdapter() {
+class StudentListAdapter(val context: Activity,
+                         val onNameUpdate: (String, String) -> Unit) : BaseAdapter() {
     var students: List<Pair<Student, List<FaceDescription>>> = ArrayList()
 
     override fun getView(position: Int, view: View?, parent: ViewGroup?): View {
@@ -30,6 +31,7 @@ class StudentListAdapter(val context: Context) : BaseAdapter() {
                 .map { uriString -> Uri.parse(uriString)}
         val uri = studentFaces.first()
         holder.occurences.text = "Occurences: " + studentFaces.size
+        holder.onNameUpdate = {name -> this.onNameUpdate(name, student.first.id)}
         holder.loadImage(uri)
         return v
     }

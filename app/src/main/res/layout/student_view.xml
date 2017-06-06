@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="5dp"
+    card_view:cardCornerRadius="2dp">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,19 +30,23 @@
         <TextView
             android:id="@+id/student_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />
         <TextView
             android:id="@+id/student_occurrences"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:layout_marginBottom="5dp"
             android:fontFamily="sans-serif"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>
+    </android.support.v7.widget.CardView>

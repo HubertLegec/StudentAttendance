@@ -35,7 +35,6 @@ class StudentListService(
                     val ungroupedFaces = getUngroupedFaces(semesterId)
                     callback.onSuccess(groupedFaces, ungroupedFaces)
                 }
-
             })
         } else {
             val groupedFaces = getGroupedFaces(semesterId)
@@ -48,6 +47,10 @@ class StudentListService(
         val groupedFaces = getGroupedFaces(semesterId)
         val ungroupedFaces = getUngroupedFaces(semesterId)
         callback.onSuccess(groupedFaces, ungroupedFaces)
+    }
+
+    fun updateStudentName(name: String, id: String) {
+        studentRepository.updateStudentName(name, id)
     }
 
     private fun groupFaces(semesterId: String, callback: GroupingCallback) {

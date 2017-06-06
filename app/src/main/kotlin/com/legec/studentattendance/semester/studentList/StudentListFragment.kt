@@ -36,7 +36,9 @@ class StudentListFragment(private val semesterId: String) : Fragment() {
         val rootView = inflater!!.inflate(R.layout.fragment_student_list, container, false)
         unbinder = ButterKnife.bind(this, rootView)
         StudentAttendanceApp.semesterComponent.inject(this)
-        adapter = StudentListAdapter(this.context)
+        adapter = StudentListAdapter(this.activity, {name, id ->
+            studentListService.updateStudentName(name, id)
+        })
         studentList.adapter = adapter
         studentList.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, view, position, id ->

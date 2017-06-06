@@ -62,6 +62,15 @@ class StudentRepository {
                 .toList()
     }
 
+    fun updateStudentName(name: String, id: String) {
+        realm.beginTransaction()
+        realm.where(Student::class.java)
+                .equalTo("id", id)
+                .findFirst()
+                .name = name
+        realm.commitTransaction()
+    }
+
     private fun createStudent(faceGroup: Array<UUID>, semesterId: String) {
         val studentId = UUID.randomUUID().toString()
         val student = realm.createObject(Student::class.java, studentId)
