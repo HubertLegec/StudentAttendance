@@ -35,7 +35,7 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
 
     val onDeleteImage: (String) -> Unit = { id: String ->
         val dialog = AlertDialog.Builder(this.context)
-                .setMessage("Delete this message?")
+                .setMessage("Are you sure?")
                 .setPositiveButton("Yes", { _, _ ->
                     adapter.deleteImage(id)
                     imageRepository.deleteImage(id)
@@ -56,6 +56,7 @@ class ImageListFragment(private val semesterId: String) : Fragment() {
         unbinder = ButterKnife.bind(this, rootView)
         StudentAttendanceApp.semesterComponent.inject(this)
         val layoutManager = GridLayoutManager(this.context, 1)
+        images.clear()
         images.addAll(imageRepository.getImagesForSemester(semesterId))
         adapter = GalleryAdapter(this.context, images, onDeleteImage, onClickImage)
         recyclerView.layoutManager = layoutManager

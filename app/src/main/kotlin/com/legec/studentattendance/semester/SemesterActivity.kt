@@ -131,7 +131,6 @@ class SemesterActivity : AppCompatActivity() {
                     //googleLocationService.connectApiClient(this)
                 } else {
                     // permission denied
-                    // TODO Disable the functionality that depends on this permission.
                     Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show()
                 }
             }

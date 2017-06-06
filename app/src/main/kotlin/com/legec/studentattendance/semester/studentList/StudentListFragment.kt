@@ -42,25 +42,23 @@ class StudentListFragment(private val semesterId: String) : Fragment() {
                 AdapterView.OnItemClickListener { parent, view, position, id ->
                     onStudentClick(adapter.getStudent(position))
                 }
+        loader.visibility = View.GONE
         return rootView
     }
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (isVisibleToUser) {
-            loader.visibility = View.VISIBLE
-            adapter.update(emptyMap())
-            adapter.notifyDataSetChanged()
-            studentListService.getSemesterFacesGroups(semesterId, object : StudentFacesCallback {
-                override fun onSuccess(result: Map<Student, List<FaceDescription>>) {
-                    Log.i(TAG, "faces success")
-                    adapter.update(result)
-                    adapter.notifyDataSetChanged()
-                    loader.visibility = View.GONE
-                }
-
-            })
-        }
+    override fun onStart() {
+        super.onStart()
+        loader.visibility = View.VISIBLE
+        adapter.update(emptyMap())
+        adapter.notifyDataSetChanged()
+        studentListService.getSemesterFacesGroups(semesterId, object : StudentFacesCallback {
+            override fun onSuccess(result: Map<Student, List<FaceDescription>>, ungrouped: List<FaceDescription>) {
+                Log.i(TAG, "faces success")
+                adapter.update(result)
+                adapter.notifyDataSetChanged()
+                loader.visibility = View.GONE
+            }
+        })
     }
 
     override fun onDestroyView() {

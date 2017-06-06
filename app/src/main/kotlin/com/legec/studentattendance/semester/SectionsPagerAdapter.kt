@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import com.legec.studentattendance.semester.imagesList.Image
 import com.legec.studentattendance.semester.imagesList.ImageListFragment
 import com.legec.studentattendance.semester.studentList.StudentListFragment
+import com.legec.studentattendance.semester.ungroupedFaces.UngroupedFacesFragment
 
 
 /**
@@ -20,6 +21,7 @@ class SectionsPagerAdapter(fm: FragmentManager, semesterId: String) : FragmentPa
         fragments = HashMap()
         fragments[0] = ImageListFragment(semesterId)
         fragments[1] = StudentListFragment(semesterId)
+        fragments[2] = UngroupedFacesFragment(semesterId)
     }
 
     /**
@@ -30,13 +32,14 @@ class SectionsPagerAdapter(fm: FragmentManager, semesterId: String) : FragmentPa
     }
 
     override fun getCount(): Int {
-        return 2
+        return 3
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
             0 -> return "Photos"
             1 -> return "Students"
+            2 -> return "Ungrouped"
         }
         return null
     }

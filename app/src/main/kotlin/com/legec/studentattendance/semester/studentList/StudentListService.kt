@@ -30,15 +30,24 @@ class StudentListService(
 
                 override fun onPostExecute(result: GroupResult) {
                     studentRepository.saveStudentsFaces(result.groups, semesterId)
+                    studentRepository.saveUngroupedFaces(result.messyGroup, semesterId)
                     val groupedFaces = getGroupedFaces(semesterId)
-                    callback.onSuccess(groupedFaces)
+                    val ungroupedFaces = getUngroupedFaces(semesterId)
+                    callback.onSuccess(groupedFaces, ungroupedFaces)
                 }
 
             })
         } else {
             val groupedFaces = getGroupedFaces(semesterId)
-            callback.onSuccess(groupedFaces)
+            val ungroupedFaces = getUngroupedFaces(semesterId)
+            callback.onSuccess(groupedFaces, ungroupedFaces)
         }
+    }
+
+    fun getUngroupedFaces(semesterId: String, callback: StudentFacesCallback) {
+        val groupedFaces = getGroupedFaces(semesterId)
+        val ungroupedFaces = getUngroupedFaces(semesterId)
+        callback.onSuccess(groupedFaces, ungroupedFaces)
     }
 
     private fun groupFaces(semesterId: String, callback: GroupingCallback) {
@@ -55,5 +64,9 @@ class StudentListService(
 
     private fun getGroupedFaces(semesterId: String): Map<Student, List<FaceDescription>> {
         return studentRepository.getStudentFaces(semesterId)
+    }
+
+    private fun getUngroupedFaces(semesterId: String): List<FaceDescription> {
+        return studentRepository.getUngroupedFaces(semesterId)
     }
 }

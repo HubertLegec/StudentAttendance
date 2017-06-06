@@ -28,6 +28,18 @@ class StudentRepository {
         realm.commitTransaction()
     }
 
+    fun saveUngroupedFaces(ungrouped: List<UUID>, semesterId: String) {
+        Log.i(TAG, "Ungrouped faces: " + ungrouped.size)
+        val faceIds = ungrouped.map { uuid -> uuid.toString()}.toTypedArray()
+        realm.beginTransaction()
+        realm.where(FaceDescription::class.java)
+                .equalTo("semesterId", semesterId)
+                .`in`("faceId", faceIds)
+                .findAll()
+                .forEach { f -> f.studentId = "" }
+        realm.commitTransaction()
+    }
+
     fun getStudentFaces(semesterId: String): Map<Student, List<FaceDescription>> {
         Log.i(TAG, "get faces for semester: " + semesterId)
         return realm.where(Student::class.java)
@@ -39,6 +51,15 @@ class StudentRepository {
                             .findAll()
                             .toList()
                 })
+    }
+
+    fun getUngroupedFaces(semesterId: String): List<FaceDescription> {
+        Log.i(TAG, "get ungrouped faces for semester: " + semesterId)
+        return realm.where(FaceDescription::class.java)
+                .equalTo("semesterId", semesterId)
+                .isEmpty("studentId")
+                .findAll()
+                .toList()
     }
 
     private fun createStudent(faceGroup: Array<UUID>, semesterId: String) {

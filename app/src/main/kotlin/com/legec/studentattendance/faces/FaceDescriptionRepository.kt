@@ -39,11 +39,11 @@ class FaceDescriptionRepository(val contentResolver: ContentResolver) {
     fun saveFaces(faces: List<Face>, imageId: String, imageUri: Uri): List<FaceDescription> {
         Log.i(TAG, "save faces for image: " + imageId)
         val bitmap = loadSizeLimitedBitmap(imageUri, contentResolver)
+        realm.beginTransaction()
         val semesterId = realm.where(Image::class.java)
                 .equalTo("id", imageId)
                 .findFirst()
                 .semesterId
-        realm.beginTransaction()
         val faceDescriptions = faces.map { face -> createFaceDescription(face, imageId, semesterId, bitmap) }
         realm.commitTransaction()
         return faceDescriptions
